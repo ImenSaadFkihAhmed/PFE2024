@@ -1331,7 +1331,7 @@
 		<Id Number="051" Name="Set Tier 0 Organizational Unit">
 			<CallingFunction>Set-TreeOU</CallingFunction>
 			<UseParameters>HardenAD_PROD-T0</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
+			<TaskEnabled>Yes</TaskEnabled>
 			<TaskDescription>set `(Tier 0` organizational unit</TaskDescription>
 		</Id>
 		<!-- 
@@ -1340,7 +1340,7 @@
 		<Id Number="052" Name="Set Tier 1 and Tier 2 Organizational Unit">
 			<CallingFunction>Set-TreeOU</CallingFunction>
 			<UseParameters>HardenAD_PROD-T1and2</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
+			<TaskEnabled>Yes</TaskEnabled>
 			<TaskDescription>set `(Tier 1 and Tier 2 combo` organizational unit</TaskDescription>
 		</Id>
 		<!-- 
@@ -1397,7 +1397,7 @@
 			<CallingFunction>New-AdministrationGroups</CallingFunction>
 			<UseParameters>
 			</UseParameters>
-			<TaskEnabled>Yes</TaskEnabled>
+			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>create `(administration groups` used by the tier model</TaskDescription>
 		</Id>
 		<!-- 
@@ -1407,7 +1407,7 @@
 			<CallingFunction>Push-DelegationModel</CallingFunction>
 			<UseParameters>
 			</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
+			<TaskEnabled>Yes</TaskEnabled>
 			<TaskDescription>Enforce `(Delegation ACEs` used by the tier model</TaskDescription>
 		</Id>
 		<!--

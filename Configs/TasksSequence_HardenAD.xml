@@ -1409,7 +1409,7 @@
 		<Id Number="050" Name="Set Administration Organizational Unit">
 			<CallingFunction>Set-TreeOU</CallingFunction>
 			<UseParameters>HardenAD_ADMIN</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
+			<TaskEnabled>Yes</TaskEnabled>
 			<TaskDescription>set `(Administration` organizational unit</TaskDescription>
 		</Id>
 		<!-- 

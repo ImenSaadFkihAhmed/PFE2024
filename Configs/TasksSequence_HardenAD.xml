@@ -64,9 +64,7 @@
 				<ChildOU Name="Users" Description="User objects belonging to this Tier">
 					<ChildOU Name="Disabled" Description="Disabled user objects" />
 				</ChildOU>
-				<ChildOU Name="Workstations" Description="Computer Objects belonging to this Tier and acting as clients">
-					<ChildOU Name="Disabled" Description="Disabled computer objects" />
-				</ChildOU>
+				
 			</OU>
 			<!-- 
 				CLASS: HardenAD_PROD-T1and2
@@ -96,25 +94,7 @@
 				CLASS: HardenAD_PROD-LEGACY
 				This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtion.
 			-->
-			<OU Class="HardenAD_PROD-LEGACY" Name="Harden_TL" Description="Legacy resources">
-				<ChildOU Name="Groups" Description="Groups objects belonging to this Tier" >
-					<ChildOU Name="AADSync" Description="Groups objects synced with Azure AD" />
-				</ChildOU>
-				<ChildOU Name="Servers" Description="Computer objects belonging to this Tier and acting as servers">
-					<ChildOU Name="Disabled" Description="Disabled computer objects" />
-				</ChildOU>
-				<ChildOU Name="Services" Description="Service accounts belonging to this Tier">
-					<ChildOU Name="Disabled" Description="Disabled sevice accounts" />
-				</ChildOU>
-				<ChildOU Name="Users" Description="User objects belonging to this Tier">
-					<ChildOU Name="AADSync" Description="User objects synced with Azure AD" />
-					<ChildOU Name="Disabled" Description="Disabled user objects" />
-				</ChildOU>
-				<ChildOU Name="Workstations" Description="Computer Objects belonging to this Tier and acting as clients">
-					<ChildOU Name="AADSync" Description="Computer objects synced with Azure AD" />
-					<ChildOU Name="Disabled" Description="Disabled computer objects" />
-				</ChildOU>
-			</OU>
+			
 			<!-- 
 				CLASS: PROVISIONNING-EN
 				This class generate an OU tree used for provisioning objects in a default location. This is the English Edition.
@@ -132,36 +112,29 @@
 		-->
 		<ACL Trustee="L-S-T1-DELEG_Group - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="group" TargetDN="OU=GroupsT1,OU=_Administration,ROOTDN" />
 		<ACL Trustee="L-S-T1-DELEG_Group - Create and Delete (administration)" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="Group" ObjectType="" TargetDN="OU=GroupsT1,OU=_Administration,ROOTDN" />
-		<ACL Trustee="L-S-T1-DELEG_Group - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="group" TargetDN="OU=GroupsT1L,OU=_Administration,ROOTDN" />
-		<ACL Trustee="L-S-T1-DELEG_Group - Create and Delete (administration)" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="Group" ObjectType="" TargetDN="OU=GroupsT1L,OU=_Administration,ROOTDN" />
+
 		<!-- 
 			Delegation for L-S-T2-DELEG_Group - Create and Delete (administration) 
 		-->
 		<ACL Trustee="L-S-T2-DELEG_Group - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="group" TargetDN="OU=GroupsT2,OU=_Administration,ROOTDN" />
 		<ACL Trustee="L-S-T2-DELEG_Group - Create and Delete (administration)" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="Group" ObjectType="" TargetDN="OU=GroupsT2,OU=_Administration,ROOTDN" />
-		<ACL Trustee="L-S-T2-DELEG_Group - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="group" TargetDN="OU=GroupsT2L,OU=_Administration,ROOTDN" />
-		<ACL Trustee="L-S-T2-DELEG_Group - Create and Delete (administration)" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="Group" ObjectType="" TargetDN="OU=GroupsT2L,OU=_Administration,ROOTDN" />
+		
 		<!-- 
 			Delegation for L-S-T1-DELEG_User - Create and Delete (administration) 
 		-->
 		<ACL Trustee="L-S-T1-DELEG_User - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="user" TargetDN="OU=UsersT1,OU=_Administration,ROOTDN" />
 		<ACL Trustee="L-S-T1-DELEG_User - Create and Delete (administration)" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=UsersT1,OU=_Administration,ROOTDN" />
-		<ACL Trustee="L-S-T1-DELEG_User - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="user" TargetDN="OU=UsersT1L,OU=_Administration,ROOTDN" />
-		<ACL Trustee="L-S-T1-DELEG_User - Create and Delete (administration)" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=UsersT1L,OU=_Administration,ROOTDN" />
+	
 		<!-- 
 			Delegation for L-S-T2-DELEG_User - Create and Delete (administration) 
 		-->
 		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="user" TargetDN="OU=UsersT2,OU=_Administration,ROOTDN" />
 		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=UsersT2,OU=_Administration,ROOTDN" />
-		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="user" TargetDN="OU=UsersT2L,OU=_Administration,ROOTDN" />
-		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=UsersT2L,OU=_Administration,ROOTDN" />
 		<!-- Production ==========
 			Delegation for L-S-T1-DELEG_Computer - Create and Delete 
 		-->
 		<ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="computer" TargetDN="OU=Servers,OU=Harden_T12,ROOTDN" />
 		<ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType="" TargetDN="OU=Servers,OU=Harden_T12,ROOTDN" />
-		<ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="computer" TargetDN="OU=Servers,OU=Harden_TL,ROOTDN" />
-		<ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType="" TargetDN="OU=Servers,OU=Harden_TL,ROOTDN" />
 		<ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="computer" TargetDN="OU=Computers,OU=Provisioning,ROOTDN" />
 		<ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType="" TargetDN="OU=Computers,OU=Provisioning,ROOTDN" />
 		<!-- 
@@ -169,8 +142,6 @@
 		-->
 		<ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="user" TargetDN="OU=Services,OU=Harden_T12,ROOTDN" />
 		<ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=Services,OU=Harden_T12,ROOTDN" />
-		<ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="user" TargetDN="OU=Services,OU=Harden_TL,ROOTDN" />
-		<ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=Services,OU=Harden_TL,ROOTDN" />
 		<ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="user" TargetDN="OU=Users,OU=Provisioning,ROOTDN" />
 		<ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=Users,OU=Provisioning,ROOTDN" />
 		<!-- 
@@ -178,8 +149,6 @@
 		-->
 		<ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="computer" TargetDN="OU=Workstations,OU=Harden_T12,ROOTDN" />
 		<ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType="" TargetDN="OU=Workstations,OU=Harden_T12,ROOTDN" />
-		<ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="computer" TargetDN="OU=Workstations,OU=Harden_TL,ROOTDN" />
-		<ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType="" TargetDN="OU=Workstations,OU=Harden_TL,ROOTDN" />
 		<ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="computer" TargetDN="OU=Computers,OU=Provisioning,ROOTDN" />
 		<ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType="" TargetDN="OU=Computers,OU=Provisioning,ROOTDN" />
 		<!-- 
@@ -187,8 +156,7 @@
 		-->
 		<ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="group" TargetDN="OU=Groups,OU=Harden_T12,ROOTDN" />
 		<ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="" TargetDN="OU=Groups,OU=Harden_T12,ROOTDN" />
-		<ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="group" TargetDN="OU=Groups,OU=Harden_TL,ROOTDN" />
-		<ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="" TargetDN="OU=Groups,OU=Harden_TL,ROOTDN" />
+
 		<!-- 
 			Delegation for L-S-T2-DELEG_contact - Create and Delete 
 		-->
@@ -199,8 +167,7 @@
 		-->
 		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="user" TargetDN="OU=Users,OU=Harden_T12,ROOTDN" />
 		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=Users,OU=Harden_T12,ROOTDN" />
-		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="user" TargetDN="OU=Users,OU=Harden_TL,ROOTDN" />
-		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=Users,OU=Harden_TL,ROOTDN" />
+	
 		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="user" TargetDN="OU=Users,OU=Provisioning,ROOTDN" />
 		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=Users,OU=Provisioning,ROOTDN" />
 		<!-- 

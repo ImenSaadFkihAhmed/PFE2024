@@ -174,7 +174,7 @@
 			Delegation for L-S-T2-DELEG_Group - Manage Membership 
 		-->
 		<ACL Trustee="L-S-T2-DELEG_Group - Manage Membership" Right="ReadProperty, WriteProperty" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="" TargetDN="OU=Groups,OU=Harden_T12,ROOTDN" />
-		<ACL Trustee="L-S-T2-DELEG_Group - Manage Membership" Right="ReadProperty, WriteProperty" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="" TargetDN="OU=Groups,OU=Harden_TL,ROOTDN" />
+		
 		<!-- 
 			Delegation for auditing computer creation and deletion 
 		-->
@@ -189,7 +189,7 @@
 		<!--
 			Custom Access Rule: allow domain join only
 		-->
-		<SDDL Trustee="L-S-T0-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Workstations,OU=Harden_T0,ROOTDN" />
+	
 		<SDDL Trustee="L-S-T1-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Servers,OU=Harden_T12,ROOTDN" />
 		<SDDL Trustee="L-S-T1-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Computers,OU=Provisioning,ROOTDN" />
 		<SDDL Trustee="L-S-T2-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Workstations,OU=Harden_T12,ROOTDN" />

@@ -203,7 +203,7 @@ Function New-AdministrationAccounts {
                             Add-Type -AssemblyName 'System.Web'
 
                             $NewPwd   = [System.Web.Security.Membership]::GeneratePassword($pwdLength, $pwdNANC)
-                            $SecPwd   = ConvertTo-SecureString -AsPlainText $NewPwd -Force
+                            $SecPwd   = ConvertTo-SecureString -AsPlainText $NewPwd -Force        
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ Password generated"
 
                             #-Create new user object

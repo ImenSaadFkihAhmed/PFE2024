@@ -1069,8 +1069,7 @@
 			<Member samAccountName="G-S-T1_Operators" />
 		</Group>
 		
-		<Group name="L-S-T0_LocalAdmins_Workstations" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=LocalAdmins,OU=GroupsT0,OU=_Administration,ROOTDN">
-		</Group>
+
 		<Group name="L-S-T2_LocalAdmins_Workstations" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=LocalAdmins,OU=GroupsT2,OU=_Administration,ROOTDN">
 			<Member samAccountName="G-S-T2_Operators" />
 		</Group>
@@ -1142,37 +1141,11 @@
 		<!-- 
 			Delegation groups used through LAPS
 		-->
-		<Group name="L-S-T1-DELEG_LAPS_PwdRead" Category="Security" Scope="domainLocal" Description="Members of this group will be able to read LAPS password for workstations" Path="OU=Deleg,OU=GroupsT1,OU=_Administration,ROOTDN">
-			<Member samAccountName="G-S-T1_Operators" />
-		</Group>
-		<Group name="L-S-T2-DELEG_LAPS_PwdRead" Category="Security" Scope="domainLocal" Description="Members of this group will be able to read LAPS password for workstations" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
-			<Member samAccountName="G-S-T2_Operators" />
-		</Group>
-		<Group name="L-S-T1-DELEG_LAPS_PwdReset" Category="Security" Scope="domainLocal" Description="Members of this group will be able to reset LAPS password for workstations" Path="OU=Deleg,OU=GroupsT1,OU=_Administration,ROOTDN">
-			<Member samAccountName="G-S-T1_Operators" />
-		</Group>
-		<Group name="L-S-T2-DELEG_LAPS_PwdReset" Category="Security" Scope="domainLocal" Description="Members of this group will be able to reset LAPS password for workstations" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
-			<Member samAccountName="G-S-T2_Operators" />
-		</Group>
+		 
 		<!-- 
 			Delegation groups Exchange Online (for futur implementation - not used yet)
 		-->
-		<Group name="L-S-T2-DELEG_ExchContact - Create and Delete" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete contact within Exchange OU" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
-			<Member samAccountName="G-S-T2_Administrators" />
-			<Member samAccountName="G-S-T2_Managers" />
-		</Group>
-		<Group name="L-S-T2-DELEG_ExchSharedMbx - Create and Delete" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete User within Exchange OU" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
-			<Member samAccountName="G-S-T2_Administrators" />
-			<Member samAccountName="G-S-T2_Managers" />
-		</Group>
-		<Group name="L-S-T2-DELEG_ExchDistributionGroup - Create and Delete" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete Group within Exchange OU" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
-			<Member samAccountName="G-S-T2_Administrators" />
-			<Member samAccountName="G-S-T2_Managers" />
-		</Group>
-		<Group name="L-S-T2-DELEG_ExchResource - Create and Delete" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete User within Exchange OU" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
-			<Member samAccountName="G-S-T2_Administrators" />
-			<Member samAccountName="G-S-T2_Managers" />
-		</Group>
+		
 		<!--
 			Delegation Computer Domain join
 		-->
@@ -1382,7 +1355,7 @@
 		<Id Number="050" Name="Set Administration Organizational Unit">
 			<CallingFunction>Set-TreeOU</CallingFunction>
 			<UseParameters>HardenAD_ADMIN</UseParameters>
-			<TaskEnabled>Yes</TaskEnabled>
+			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>set `(Administration` organizational unit</TaskDescription>
 		</Id>
 		<!-- 
@@ -1447,7 +1420,7 @@
 		<Id Number="080" Name="Create administration accounts">
 			<CallingFunction>New-AdministrationAccounts</CallingFunction>
 			<UseParameters>H4rd3n@D!!</UseParameters>
-			<TaskEnabled>Yes</TaskEnabled>
+			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>create `(administration accounts` used by the tier model</TaskDescription>
 		</Id>
 		<!-- 
@@ -1457,7 +1430,7 @@
 			<CallingFunction>New-AdministrationGroups</CallingFunction>
 			<UseParameters>
 			</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
+			<TaskEnabled>Yes</TaskEnabled>
 			<TaskDescription>create `(administration groups` used by the tier model</TaskDescription>
 		</Id>
 		<!-- 

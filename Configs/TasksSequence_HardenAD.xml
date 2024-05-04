@@ -28,37 +28,26 @@
 					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
 					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
 					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
-					<ChildOU Name="Logon" Description="Groups used to login access to a resource" />
+					
 				</ChildOU>
 				<ChildOU Name="GroupsT1" Description="Groups to manage Tier 1 objects">
 					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
 					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
 					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
 				</ChildOU>
-				<ChildOU Name="GroupsT1L" Description="Groups to manage Tier 1 Legacy objects">
-					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
-					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
-					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
-				</ChildOU>
+		
 				<ChildOU Name="GroupsT2" Description="Groups to manage Tier 2 objects">
 					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
 					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
 					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
 				</ChildOU>
-				<ChildOU Name="GroupsT2L" Description="Groups to manage Tier 1 Legacy objects">
-					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
-					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
-					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
-				</ChildOU>
-				<ChildOU Name="PawAccess" Description="First Node Privilege Admin Worstations" />
-				<ChildOU Name="PawT0" Description="Privilege Admin Worstations Tier 0 assets" />
-				<ChildOU Name="PawT12L" Description="Privilege Admin Worstations for Tier 1, Tier 2 and Tier Legacy assets" />
-				<ChildOU Name="UserAccess" Description="First User Node Privilege Admin Worstations" />
+				
+				
 				<ChildOU Name="UsersT0" Description="Users to manage Tier 0 objects" />
 				<ChildOU Name="UsersT1" Description="Users to manage Tier 1 objects" />
-				<ChildOU Name="UsersT1L" Description="Users to manage Tier 1 Legacy objects" />
+			
 				<ChildOU Name="UsersT2" Description="Users to manage Tier 2 objects" />
-				<ChildOU Name="UsersT2L" Description="Users to manage Tier 1 Legacy objects" />
+				
 			</OU>
 			<!--
 				CLASS: HardenAD_PROD-T0

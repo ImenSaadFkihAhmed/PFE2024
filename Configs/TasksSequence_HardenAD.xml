@@ -462,15 +462,33 @@
 		<!-- 
 			LAN MANAGER AND NT LAN MANAGER
 		-->
-		
+		<GPO BackupID="{4753AF43-1FD0-4A59-A442-B79EE4E9A290}" Validation="Yes" Name="HAD-NTLM-Audit-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enable NTLM audit on Domain Controller.">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
 		<!-- 
 			LOCAL ADMINISTRATORS 
 		-->
-		
+		<GPO BackupID="{B9A42D3A-61F4-45D4-BF94-D61B80570838}" Validation="Yes" Name="HAD-LocalAdmins-T0-Srv" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T0 system's integrated administrator group">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoFilter WMI="Windows-Supported-OS-Servers-NoDC" />
+			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{9B52CEFC-64E9-43EF-A822-DA5557416251}" Validation="Yes" Name="HAD-LocalAdmins-T1" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T1 system's integrated administrator group">
+			<GpoMode Mode="DENY" Tier="Tier1" />
+			<GpoFilter WMI="Windows-Supported-OS-Servers-NoDC" />
+			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{DBB5A54A-4338-4D59-A25E-BD71CEBB86B2}" Validation="Yes" Name="HAD-LocalAdmins-T2" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T2 system's integrated administrator group">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoFilter WMI="Windows-Supported-OS-Clients" />
+			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
 		<!-- 
 			LOCAL ACCOUNTS SETUP 
 		-->
-		
 		<!-- 
 			LOGIN RESTRICTION 
 		-->

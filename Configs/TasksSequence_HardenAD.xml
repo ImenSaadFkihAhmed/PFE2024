@@ -466,6 +466,14 @@
 			<GpoMode Mode="DENY" Tier="Tier0" />
 			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
+		<GPO BackupID="{5B9C9897-9806-4996-A3E6-10403FD271ED}" Validation="Yes" Name="HAD-NTLM1-LMx-Disabled" Description="--- Harden AD --- &quot; ,&quot; Forces the use of NTLMv2 response. LM and NTLMv1 responses are refused.">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{BFB24A1C-121B-400E-86C2-CD43AD6FFA54}" Validation="Yes" Name="HAD-NTLMv2-128bits-Required" Description="--- Harden AD --- &quot; ,&quot; Configure NTLMv2 to use 128-bit encryption.">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
 		<!-- 
 			LOCAL ADMINISTRATORS 
 		-->
@@ -1127,5 +1135,14 @@
 			<TaskDescription>Cross integration of `(administration groups` used by the tier model</TaskDescription>
 		</Id>
 		-->
+		<!-- 
+			Get NTLM V1 Audit
+		-->
+		<Id Number="161" Name="Audit NTLM V1">
+			<CallingFunction>Get-NtlmV1LogonEvents</CallingFunction>
+			<UseParameters>DCs</UseParameters>
+			<TaskEnabled>Yes</TaskEnabled>
+			<TaskDescription>Audit NTLMv1</TaskDescription>
+		</Id>
 	</Sequence>
 </Settings>

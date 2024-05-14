@@ -40,11 +40,11 @@ Function Set-GpoCentralStore {
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
     
     ## Getting existing Sysvol base path
-    if (((Get-WMIObject win32_operatingsystem).name -like "*2008*")) 
-    {
+    if (((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
         Import-Module ActiveDirectory
         $sysVolBasePath = ((net share | Where-Object { $_ -like "SYSVOL*" }) -split " " | Where-Object { $_ -ne "" })[1]
-    } else {
+    }
+    else {
         $sysVolBasePath = (Get-SmbShare SYSVOL).path
     }
 
@@ -52,12 +52,12 @@ Function Set-GpoCentralStore {
     $domName = (Get-AdDomain).DNSRoot
 
     # Testing if the path is as expected (i.e. centralStore)
-    if (Test-Path "$sysVolBasePath\$domName\Policies\PolicyDefinitions") 
-    {
+    if (Test-Path "$sysVolBasePath\$domName\Policies\PolicyDefinitions") {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Central Store path is present"
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Central Store path is already enabled"
         $result = 0
-    } else {
+    }
+    else {
         # We need to enable the central store
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Central Store path is not enable yet"
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Robocopy C:\Windows\PolicyDefinitions $sysVolBasePath\$domName\Policies\PolicyDefinitions /MIR (start)"
@@ -70,8 +70,7 @@ Function Set-GpoCentralStore {
         $SourceItemsCount = (Get-ChildItem "C:\Windows\PolicyDefinitions" -File -Recurse).count
         $TargetItemsCount = (Get-ChildItem "$sysVolBasePath\$domName\Policies\PolicyDefinitions" -File -Recurse).count
         
-        if ($TargetItemsCount -eq $SourceItemsCount) 
-        {
+        if ($TargetItemsCount -eq $SourceItemsCount) {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> file copy as worked as expected ($TargetItemsCount files found in the CentralStore - same as the source repository)."
             $result = 0
         }
@@ -86,8 +85,7 @@ Function Set-GpoCentralStore {
     $HardenPolicyDefinition = Get-Item $PSScriptRoot\..\Inputs\PolicyDefinitions
     $GPOCentralStore = "$sysVolBasePath\$domName\Policies"
 
-    if (Test-Path $GPOCentralStore) 
-    {
+    if (Test-Path $GPOCentralStore) {
         # Rename the current repository
         $UniqueId = (Get-Date -Format yyyy-MM-yy_HHmmss)
         try {
@@ -103,8 +101,7 @@ Function Set-GpoCentralStore {
         }
         
         # Update the central with the latest repository release
-        if ($result -eq 0)
-        {
+        if ($result -eq 0) {
             try {
                 Copy-Item $HardenPolicyDefinition.FullName -Destination "$sysVolBasePath\$domName\Policies" -Recurse -Force -ErrorAction SilentlyContinue
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinitions has been copied to $sysVolBasePath\$domName\Policies"
@@ -130,7 +127,8 @@ Function Set-GpoCentralStore {
         $bugFix = Get-ChildItem $GPOCentralStore\PolicyDefinitions -File -Filter "winstoreui.adm?" -Recurse
         $bugFix | Remove-Item -Force -Confirm:$false -ErrorAction Stop
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Found $($bugFix.count) winstoreui.admx/l file(s) and removed them successfully from the central store"
-    } Catch {
+    }
+    Catch {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Found $($bugFix.count) winstoreui.admx/l file(s) to remove from central store but failed to delete them!"
     }
         
@@ -551,7 +549,7 @@ Function Install-LAPS {
         }
     }
     ## Load Task sequence
-    $xmlSkeleton   = [xml](Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
+    $xmlSkeleton = [xml](Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
     $RootDomainDns = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Rootdomaindns%" }).translateTo
 
     ## Check prerequesite: running user must be member of the Schema Admins group and running computer should be Schema Master owner.
@@ -584,7 +582,7 @@ Function Install-LAPS {
         ## If the install is a success, then let's update the schema
         if ($result -eq 0) {
             Try {
-                Import-Module LAPS -ErrorAction Stop -WarningAction Stop
+                Import-Module AdmPwd.PS -ErrorAction Stop -WarningAction Stop
                 $null = Update-AdmPwdADSchema
             }
             Catch {
@@ -650,8 +648,8 @@ Function Set-LapsPermissions {
         }
     }
 
-    ## Check prerequesite: the LAPS module has to be present. 
-    if (-not(Get-Module -ListAvailable -Name "LAPS")) {
+    ## Check prerequesite: the ADMPWD.PS module has to be present. 
+    if (-not(Get-Module -ListAvailable -Name "AdmPwd.PS")) {
         try {
             Start-Process -FilePath "$env:systemroot\system32\msiexec.exe" `
                 -WorkingDirectory .\Inputs\LocalAdminPwdSolution\Binaries `
@@ -661,7 +659,7 @@ Function Set-LapsPermissions {
         }
         catch {
             $result = 2
-            $ResMess = "LAPS module missing."
+            $ResMess = "AdmPwd.PS module missing."
         }
     }
     
@@ -671,11 +669,11 @@ Function Set-LapsPermissions {
         if ($RunMode -eq "DEFAULT") {
             #.Loading module
             Try {
-                Import-Module LAPS -ErrorAction Stop
+                Import-Module AdmPwd.PS -ErrorAction Stop
             }
             Catch {
                 $result = 2
-                $ResMess = "Failed to load module LAPS."
+                $ResMess = "Failed to load module AdmPwd.PS."
             }
 
             #.Adding permissions at the root level. This will be the only action.
@@ -695,11 +693,11 @@ Function Set-LapsPermissions {
         Else {
             #.Loading module
             Try {
-                Import-Module LAPS -ErrorAction Stop
+                Import-Module AdmPwd.PS -ErrorAction Stop
             }
             Catch {
                 $result = 2
-                $ResMess = "Failed to load module LAPS."
+                $ResMess = "Failed to load module AdmPwd.PS."
             }
 
             #.If no critical issue, the following loop will proceed with fine delegation
@@ -1139,7 +1137,7 @@ Function Set-WindowsLapsPermissions {
                             $TargetOU = $TargetOU -replace $TransID.translateFrom, $TransID.translateTo
                             $GrantedId = $GrantedId -replace $TransID.translateFrom, $TransID.translateTo
                         }
-                        Set-AdmPwdReadPasswordPermission -Identity:$TargetOU -AllowedPrincipals $GrantedId
+                        Set-LapsADReadPasswordPermission -Identity:$TargetOU -AllowedPrincipals $GrantedId
                     }
                     Catch {
                         $result = 1
@@ -1157,7 +1155,7 @@ Function Set-WindowsLapsPermissions {
                             $TargetOU = $TargetOU -replace $TransID.translateFrom, $TransID.translateTo
                             $GrantedId = $GrantedId -replace $TransID.translateFrom, $TransID.translateTo
                         }
-                        Set-AdmPwdResetPasswordPermission -Identity:$TargetOU -AllowedPrincipals $GrantedId
+                       Set-LapsADResetPasswordPermission -Identity:$TargetOU -AllowedPrincipals $GrantedId
                     }
                     Catch {
                         $result = 1
@@ -1170,5 +1168,86 @@ Function Set-WindowsLapsPermissions {
     
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
+Function UpdateSchema-WindowsLAPS {
+    <#
+        .Synopsis
+         To be deployed, LAPS need to update the AD Schema first.
+        
+        .Description
+         The script first update the schema, then it will install the management tool.
+
+        .Notes
+         Version: 01.00 -- contact@hardenad.net 
+		 Version: 01.01 -- contact@hardenad.net 
+         
+         history: 21.08.22 Script creation
+				  16.07.22 Update to use dynamic translation - removed debug log
+    #>
+    param(
+        [Parameter(mandatory = $true, Position = 0)]
+        [ValidateSet('ForceDcIsSchemaOwner', 'IgnoreDcIsSchemaOwner')]
+        [String]
+        $SchemaOwnerMode
+    )
+
+    $result = 0
+
+    ## When dealing with 2008R2, we need to import AD module first
+    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
+        Try { 
+            Import-Module ActiveDirectory
+        } 
+        Catch {
+            $noError = $false
+            $result = 2
+            $ResMess = "AD module not available."
+        }
+    }
+    ## Load Task sequence
+    $xmlSkeleton = [xml](Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
+    $RootDomainDns = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Rootdomaindns%" }).translateTo
+
+    ## Check prerequesite: running user must be member of the Schema Admins group and running computer should be Schema Master owner.
+    $CurrentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+    $isSchemaAdm = Get-ADGroupMember -Recursive ((Get-ADDomain -Server $RootDomainDns).DomainSID.value + "-518") -Server $RootDomainDns | Where-Object { $_.SID -eq $CurrentUser.User }
+
+    $CurrentCptr = $env:COMPUTERNAME
+    $isSchemaOwn = (Get-ADForest).SchemaMaster -eq ($currentCptr + "." + (Get-ADDomain).DnsRoot)
+
+    ## Check if a bypass has been requested for the schema master owner condition
+    if ($SchemaOwnerMode -eq 'IgnoreDcIsSchameOwner') {
+        $isSchemaOwn = $true
+    }
+
+    if ($isSchemaAdm -and $isSchemaOwn) {
+        ## User has suffisant right, the script will then proceed.
+        ## First, we need to install the pShell add-ons to be able to update the schema.
+        
+        
+        ## If the install is a success, then let's update the schema
+        if ($result -eq 0) {
+            Try {
+                Import-Module LAPS -ErrorAction Stop -WarningAction Stop
+                $null = Update-LapsADSchema
+            }
+            Catch {
+                $result = 1
+                $ResMess = "LAPS installed but the schema extension has failed (warning: .Net 4.0 or greater requiered)"
+            }
+        }
+        Else {
+            $result = 1
+            $ResMess = "The schema extension has been canceled"
+        }
+    }
+    Else {
+        $result = 2
+        $ResMess = "The user is not a Schema Admins (group membership with recurse has failed)"
+    }
+
+    ## Exit
+    return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
+}
+
 
 Export-ModuleMember -Function *

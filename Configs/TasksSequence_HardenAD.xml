@@ -1047,7 +1047,7 @@
 			<CallingFunction>New-AdministrationGroups</CallingFunction>
 			<UseParameters>
 			</UseParameters>
-			<TaskEnabled>Yes</TaskEnabled>
+			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>create `(administration groups` used by the tier model</TaskDescription>
 		</Id>
 		<!-- 
@@ -1094,18 +1094,18 @@
 			Warning: this only works with .Net 4.0 or greater.
 		-->
 		<Id Number="134" Name="Update Ad schema for LAPS and deploy PShell tools">
-			<CallingFunction>Install-Laps</CallingFunction>
+			<CallingFunction>UpdateSchema-WindowsLAPS</CallingFunction>
 			<UseParameters>ForceDcIsSchemaOwner</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
+			<TaskEnabled>Yes</TaskEnabled>
 			<TaskDescription>Update `(AD Schema` for `[LAPS` and add `(PShell add-on`</TaskDescription>
 		</Id>
 		<!-- 
 			LAPS PERMISSIONS DEPLOYMENT OVER THE DOMAIN
 		-->
 		<Id Number="135" Name="Setup LAPS permissions over the domain">
-			<CallingFunction>Set-LapsPermissions</CallingFunction>
+			<CallingFunction>Set-WindowsLapsPermissions </CallingFunction>
 			<UseParameters>CUSTOM</UseParameters>
-			<TaskEnabled>Yes</TaskEnabled>
+			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>Set-up `(LAPS` permissions on the target domain</TaskDescription>
 		</Id>
 		<!-- 

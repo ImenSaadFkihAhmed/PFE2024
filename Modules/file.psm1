@@ -584,7 +584,7 @@ Function Install-LAPS {
         ## If the install is a success, then let's update the schema
         if ($result -eq 0) {
             Try {
-                Import-Module AdmPwd.PS -ErrorAction Stop -WarningAction Stop
+                Import-Module LAPS -ErrorAction Stop -WarningAction Stop
                 $null = Update-AdmPwdADSchema
             }
             Catch {
@@ -650,8 +650,8 @@ Function Set-LapsPermissions {
         }
     }
 
-    ## Check prerequesite: the ADMPWD.PS module has to be present. 
-    if (-not(Get-Module -ListAvailable -Name "AdmPwd.PS")) {
+    ## Check prerequesite: the LAPS module has to be present. 
+    if (-not(Get-Module -ListAvailable -Name "LAPS")) {
         try {
             Start-Process -FilePath "$env:systemroot\system32\msiexec.exe" `
                 -WorkingDirectory .\Inputs\LocalAdminPwdSolution\Binaries `
@@ -661,7 +661,7 @@ Function Set-LapsPermissions {
         }
         catch {
             $result = 2
-            $ResMess = "AdmPwd.PS module missing."
+            $ResMess = "LAPS module missing."
         }
     }
     
@@ -671,11 +671,11 @@ Function Set-LapsPermissions {
         if ($RunMode -eq "DEFAULT") {
             #.Loading module
             Try {
-                Import-Module AdmPwd.PS -ErrorAction Stop
+                Import-Module LAPS -ErrorAction Stop
             }
             Catch {
                 $result = 2
-                $ResMess = "Failed to load module AdmPwd.PS."
+                $ResMess = "Failed to load module LAPS."
             }
 
             #.Adding permissions at the root level. This will be the only action.
@@ -695,11 +695,11 @@ Function Set-LapsPermissions {
         Else {
             #.Loading module
             Try {
-                Import-Module AdmPwd.PS -ErrorAction Stop
+                Import-Module LAPS -ErrorAction Stop
             }
             Catch {
                 $result = 2
-                $ResMess = "Failed to load module AdmPwd.PS."
+                $ResMess = "Failed to load module LAPS."
             }
 
             #.If no critical issue, the following loop will proceed with fine delegation
@@ -1038,6 +1038,136 @@ Function Set-LocAdmTaskScripts {
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
     $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
 
+    return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
+}
+Function Set-WindowsLapsPermissions {
+    param(
+        [Parameter(mandatory = $true, Position = 0)]
+        [ValidateSet('DEFAULT', 'CUSTOM')]
+        [String]
+        $RunMode
+    )
+    $result = 0
+     ## When dealing with 2008R2, we need to import AD module first
+    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
+        Try { 
+            Import-Module ActiveDirectory
+        } 
+        Catch {
+            $noError = $false
+            $result = 2
+            $ResMess = "AD module not available."
+        }
+    }
+     if ($result -ne 2) {
+        # - Default mode
+        if ($RunMode -eq "DEFAULT") {
+            #.Loading module
+            Try {
+                Import-Module LAPS -ErrorAction Stop
+            }
+            Catch {
+                $result = 2
+                $ResMess = "Failed to load module LAPS."
+            }
+
+            #.Adding permissions at the root level. This will be the only action.
+            #.All permissions belong then to native object reader/writer, such as domain admins.
+            if ($result -ne 2) {
+                Try {
+                    $rootDN = (Get-ADDomain).DistinguishedName
+                    Set-AdmPwdComputerSelfPermission -OrgUnit $rootDN -ErrorAction Stop | Out-Null
+                }
+                Catch {
+                    $result = 2
+                    $ResMess = "Failed to apply Computer Self Permission on all Organizational Units."
+                }
+            }
+        }
+        # - Custom mode
+        Else {
+            #.Loading module
+            Try {
+                Import-Module LAPS -ErrorAction Stop
+            }
+            Catch {
+                $result = 2
+                $ResMess = "Failed to load module LAPS."
+            }
+
+            #.If no critical issue, the following loop will proceed with fine delegation
+            if ($result -ne 2) {
+                #.Get xml data
+                Try {
+                    $cfgXml = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
+                }
+                Catch {
+                    $ResMess = "Failed to load configuration file"
+                    $result = 2
+                }
+            }
+            if ($result -ne 2) {
+                #.Granting SelfPermission
+                $Translat = $cfgXml.Settings.Translation
+                $Granting = $cfgXml.Settings.LocalAdminPasswordSolution.AdmPwdSelfPermission
+                foreach ($Granted in $Granting) {
+                    Try {
+                        $TargetOU = $Granted.Target
+                        foreach ($transID in $translat.wellKnownID) {
+                            $TargetOU = $TargetOU -replace $TransID.translateFrom, $TransID.translateTo
+                        }
+                        Set-AdmPwdComputerSelfPermission -OrgUnit $TargetOU -ErrorAction Stop | Out-Null
+                    }
+                    Catch {
+                        $result = 1
+                        $ResMess = "Failed to apply Permission on one or more OU."
+                        # Write-Host $_.Exception.Message
+                        # Write-Host $TargetOU
+                        # Pause
+                    }
+                }
+                #.Getting Domain Netbios name
+                $NBname = (Get-ADDomain).netBiosName
+
+                #.Granting Password Reading Permission
+                $Granting = $cfgXml.Settings.LocalAdminPasswordSolution.AdmPwdPasswordReader
+                foreach ($Granted in $Granting) {
+                    Try {
+                        $TargetOU = $Granted.Target
+                        $GrantedId = $Granted.Id
+                        foreach ($transID in $translat.wellKnownID) {
+                            $TargetOU = $TargetOU -replace $TransID.translateFrom, $TransID.translateTo
+                            $GrantedId = $GrantedId -replace $TransID.translateFrom, $TransID.translateTo
+                        }
+                        Set-AdmPwdReadPasswordPermission -Identity:$TargetOU -AllowedPrincipals $GrantedId
+                    }
+                    Catch {
+                        $result = 1
+                        $ResMess = "Failed to apply Permission on one or more OU."
+                    }
+                }
+
+                #.Granting Password Reset Permission
+                $Granting = $cfgXml.Settings.LocalAdminPasswordSolution.AdmPwdPasswordReset
+                foreach ($Granted in $Granting) {
+                    Try {
+                        $TargetOU = $Granted.Target
+                        $GrantedId = $Granted.Id
+                        foreach ($transID in $translat.wellKnownID) {
+                            $TargetOU = $TargetOU -replace $TransID.translateFrom, $TransID.translateTo
+                            $GrantedId = $GrantedId -replace $TransID.translateFrom, $TransID.translateTo
+                        }
+                        Set-AdmPwdResetPasswordPermission -Identity:$TargetOU -AllowedPrincipals $GrantedId
+                    }
+                    Catch {
+                        $result = 1
+                        $ResMess = "Failed to apply Permission on one or more OU."
+                    }
+                }
+            }
+        }
+    }
+    
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
 

@@ -946,6 +946,7 @@ foreach ($task in $Tasks)
     if ($zText -eq $ColorsAndTexts.FuncErrText) 
     {
         $SchedulrLoging += New-LogEntry "error" "ERR FUNC: it seems that the called function is missing or is not properly returning its result!" 
+        $SchedulrLoging += $job
         $SchedulrLoging += New-LogEntry "error" ("ERR FUNC: received result code: " + $result.ResultCode)
     }
 }

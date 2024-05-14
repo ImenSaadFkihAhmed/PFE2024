@@ -81,6 +81,7 @@
 		<Directory name="Logs"/>
 		<Directory name="Logs\Debug"/>
 		<Directory name="Modules">
+			<FILE>Audit.psm1</FILE>
 			<File>accessControlList.psm1</File>
 			<File>domain.psm1</File>
 			<File>engine.psm1</File>

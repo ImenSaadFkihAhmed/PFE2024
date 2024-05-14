@@ -756,7 +756,18 @@
 		<!-- 
 			Delegation groups used through LAPS
 		-->
-		 
+		 <Group name="L-S-T1-DELEG_LAPS_PwdRead" Category="Security" Scope="domainLocal" Description="Members of this group will be able to read LAPS password for workstations" Path="OU=Deleg,OU=GroupsT1,OU=_Administration,ROOTDN">
+			<Member samAccountName="G-S-T1_Operators" />
+		</Group>
+		<Group name="L-S-T2-DELEG_LAPS_PwdRead" Category="Security" Scope="domainLocal" Description="Members of this group will be able to read LAPS password for workstations" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
+			<Member samAccountName="G-S-T2_Operators" />
+		</Group>
+		<Group name="L-S-T1-DELEG_LAPS_PwdReset" Category="Security" Scope="domainLocal" Description="Members of this group will be able to reset LAPS password for workstations" Path="OU=Deleg,OU=GroupsT1,OU=_Administration,ROOTDN">
+			<Member samAccountName="G-S-T1_Operators" />
+		</Group>
+		<Group name="L-S-T2-DELEG_LAPS_PwdReset" Category="Security" Scope="domainLocal" Description="Members of this group will be able to reset LAPS password for workstations" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
+			<Member samAccountName="G-S-T2_Operators" />
+		</Group>
 		<!-- 
 			Delegation groups Exchange Online (for futur implementation - not used yet)
 		-->
@@ -860,26 +871,17 @@
 		<!--
 			Self Permissions
 		-->
-		<AdmPwdSelfPermission Target="OU=PawT0,OU=_Administration,%DN%" />
-		<AdmPwdSelfPermission Target="OU=PawT12L,OU=_Administration,%DN%" />
-		<AdmPwdSelfPermission Target="OU=PawAccess,OU=_Administration,%DN%" />
-		<AdmPwdSelfPermission Target="OU=Servers,OU=Harden_TL,%DN%" />
 		<AdmPwdSelfPermission Target="OU=Servers,OU=Harden_T12,%DN%" />
-		<AdmPwdSelfPermission Target="OU=Workstations,OU=Harden_TL,%DN%" />
 		<AdmPwdSelfPermission Target="OU=Workstations,OU=Harden_T12,%DN%" />
 		<!--
 			Password Reader Permissions
 		-->
-		<AdmPwdPasswordReader Target="OU=Servers,OU=Harden_TL,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReader%" />
 		<AdmPwdPasswordReader Target="OU=Servers,OU=Harden_T12,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReader%" />
-		<AdmPwdPasswordReader Target="OU=Workstations,OU=Harden_TL,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReader%" />
 		<AdmPwdPasswordReader Target="OU=Workstations,OU=Harden_T12,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReader%" />
 		<!-- 
 			Password Reset Permissions
 		-->
-		<AdmPwdPasswordReset Target="OU=Servers,OU=Harden_TL,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReset%" />
 		<AdmPwdPasswordReset Target="OU=Servers,OU=Harden_T12,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReset%" />
-		<AdmPwdPasswordReset Target="OU=Workstations,OU=Harden_TL,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReset%" />
 		<AdmPwdPasswordReset Target="OU=Workstations,OU=Harden_T12,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReset%" />
 	</LocalAdminPasswordSolution>
 	<Sequence>
@@ -1045,7 +1047,7 @@
 			<CallingFunction>New-AdministrationGroups</CallingFunction>
 			<UseParameters>
 			</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
+			<TaskEnabled>Yes</TaskEnabled>
 			<TaskDescription>create `(administration groups` used by the tier model</TaskDescription>
 		</Id>
 		<!-- 
@@ -1055,7 +1057,7 @@
 			<CallingFunction>Push-DelegationModel</CallingFunction>
 			<UseParameters>
 			</UseParameters>
-			<TaskEnabled>Yes</TaskEnabled>
+			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>Enforce `(Delegation ACEs` used by the tier model</TaskDescription>
 		</Id>
 		<!--
@@ -1074,7 +1076,7 @@
 			<CallingFunction>Import-WmiFilters</CallingFunction>
 			<UseParameters>
 			</UseParameters>
-			<TaskEnabled>Yes</TaskEnabled>
+			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>Import `(WMI filter` to the domain</TaskDescription>
 		</Id>
 		<!-- 
@@ -1084,7 +1086,7 @@
 			<CallingFunction>New-GpoObject</CallingFunction>
 			<UseParameters>
 			</UseParameters>
-			<TaskEnabled>Yes</TaskEnabled>
+			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>Import or update `(group policy objects` to the domain and link them</TaskDescription>
 		</Id>
 		<!-- 
@@ -1103,7 +1105,7 @@
 		<Id Number="135" Name="Setup LAPS permissions over the domain">
 			<CallingFunction>Set-LapsPermissions</CallingFunction>
 			<UseParameters>CUSTOM</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
+			<TaskEnabled>Yes</TaskEnabled>
 			<TaskDescription>Set-up `(LAPS` permissions on the target domain</TaskDescription>
 		</Id>
 		<!-- 
@@ -1140,8 +1142,8 @@
 		-->
 		<Id Number="161" Name="Audit NTLM V1">
 			<CallingFunction>Get-NtlmV1LogonEvents</CallingFunction>
-			<UseParameters>DCs</UseParameters>
-			<TaskEnabled>Yes</TaskEnabled>
+			<UseParameters></UseParameters>
+			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>Audit NTLMv1</TaskDescription>
 		</Id>
 	</Sequence>

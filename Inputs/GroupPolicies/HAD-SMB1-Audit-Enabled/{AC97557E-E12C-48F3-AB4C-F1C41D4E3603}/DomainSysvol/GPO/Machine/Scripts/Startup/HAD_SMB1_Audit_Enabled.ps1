@@ -1,4 +1,4 @@
-$host.ui.RawUI.WindowTitle = “AuditSmbSession”
+$host.ui.RawUI.WindowTitle = ï¿½AuditSmbSessionï¿½
 $data = @([pscustomobject]@{ID=$Null;ClientComputerName=$Null;ClientUserName=$Null;Dialect=$Null})
 $hostname = hostname
 $path_file = $($($myInvocation.InvocationName).Replace($($myInvocation.MyCommand),''))

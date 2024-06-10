@@ -414,7 +414,10 @@
 		<!--
 			BLOODHOUND 
 		-->
-		
+		<GPO BackupID="{651CC04C-B863-4346-B90F-7D97B42020BC}" Validation="Yes" Name="HAD-Kerberos-AES-Enabled" Description="--- Harden AD --- &quot; ,&quot; Set the encryption types that Kerberos is allowed to use.">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="No" Enforced="No" />
+		</GPO>
 		<!-- 
 			BLOCK WEBCAM ON LOCK 
 		-->
@@ -446,7 +449,14 @@
 		<!-- 
 			KERBEROS 
 		-->
-		
+		<GPO BackupID="{960547AE-574B-4A5E-B238-7A6C0DD491D2}" Validation="Yes" Name="HAD-Kerberos-AES-Enabled" Description="--- Harden AD --- &quot; ,&quot; Set the encryption types that Kerberos is allowed to use.">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{AA731818-2050-4EE5-A0A1-088E75A458D8}" Validation="Yes" Name="HAD-Reset-KRBTGT-Password" Description="--- Harden AD --- &quot; ,&quot; Enable Kerberos reset MotPasse">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="No" Enforced="Yes" />
+		</GPO>
 		<!-- 
 			LAPS 
 		-->
@@ -454,11 +464,21 @@
 		<!-- 
 			LDAP PROTOCOL 
 		-->
-		
+		<GPO BackupID="{FA2ECE42-130C-4E79-A30A-CF4B5567C5FA}" Validation="Yes" Name="HAD-LDAP-Audit-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enable event logs for the LDAP protocol.">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{CA093B03-5505-4704-B673-EA94ED4F8994}" Validation="Yes" Name="HAD-LDAP-CBT-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enforces validation of Channel Binding Tokens (CBT) received in LDAP bind requests.">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="No" Enforced="Yes" />
+		</GPO>
 		<!-- 
 			LLMNR 
 		-->
-		
+		<GPO BackupID="{5FCEADFE-DFF0-40E7-BDA1-D49DC3EB5655}" Validation="Yes" Name="HAD-LLMNR-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disables Link-local Multicast Name Resolution (LLMNR).">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="No" Enforced="Yes" />
+		</GPO>
 		<!-- 
 			LAN MANAGER AND NT LAN MANAGER
 		-->
@@ -468,7 +488,7 @@
 		</GPO>
 		<GPO BackupID="{5B9C9897-9806-4996-A3E6-10403FD271ED}" Validation="Yes" Name="HAD-NTLM1-LMx-Disabled" Description="--- Harden AD --- &quot; ,&quot; Forces the use of NTLMv2 response. LM and NTLMv1 responses are refused.">
 			<GpoMode Mode="DENY" Tier="Tier0" />
-			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="No" Enforced="No" />
 		</GPO>
 		<GPO BackupID="{BFB24A1C-121B-400E-86C2-CD43AD6FFA54}" Validation="Yes" Name="HAD-NTLMv2-128bits-Required" Description="--- Harden AD --- &quot; ,&quot; Configure NTLMv2 to use 128-bit encryption.">
 			<GpoMode Mode="DENY" Tier="Tier0" />
@@ -497,6 +517,12 @@
 		<!-- 
 			LOCAL ACCOUNTS SETUP 
 		-->
+		<GPO BackupID="{4D5DF38A-161D-42AD-A29B-94309EDE3D0D}" Validation="Yes" Name="HAD-Local-Accounts-Config" Description="--- Harden AD --- &quot; ,&quot; Enable and rename the local administrator account. Disable and rename the local guest account.">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
 		<!-- 
 			LOGIN RESTRICTION 
 		-->
@@ -522,7 +548,16 @@
 		<!-- 
 			LOGON CACHE 
 		-->
-		
+		<GPO BackupID="{38C8D47E-E4F2-4DF2-8B60-BE9B3E53647D}" Validation="Yes" Name="HAD-Logon-Cache-0" Description="--- Harden AD --- &quot; ,&quot; No login credentials cached from servers.">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoFilter WMI="Windows-OS-Servers" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{BC9F44A0-7603-4223-AD48-9467B675086F}" Validation="Yes" Name="HAD-Logon-Cache-2" Description="--- Harden AD --- &quot; ,&quot; Keeps two login credentials cached from servers.">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoFilter WMI="Windows-OS-Clients" />
+			<GpoLink Path="RootDN" Enabled="No" Enforced="Yes" />
+		</GPO>
 		<!-- 
 			OS HARDENING 
 		-->
@@ -546,7 +581,16 @@
 		<!-- 
 			SMB HARDENING 
 		-->
-		
+		<GPO BackupID="{78001DDD-6357-4EAA-A645-1311F6E59411}" Validation="Yes" Name="HAD-SMB1-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disables SMBv1.">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-2008-Vista-and-Newer" />
+			<GpoLink Path="RootDN" Enabled="No" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{6930963C-6F98-4496-93B9-09511AF49681}" Validation="Yes" Name="HAD-SMB-Signing-Configuration" Description="--- Harden AD --- &quot; ,&quot; Configure SMB signing for clients.">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="No" Enforced="Yes" />
+		</GPO>
+
 		<!-- 
 			TLS AND SSL HARDENING 
 		-->
@@ -554,7 +598,10 @@
 		<!--
 			DOMAIN JOIN
 		-->
-		
+		<GPO BackupID="{3B6DC475-6822-49C1-B47A-4199DF4FE1E6}" Validation="Yes" Name="HAD-DC-Allow-Computer-Account-ReUse" Description="--- Harden AD --- &quot; ,&quot; Allow computer domain join to specific delegation group.">
+			<GpoMode Mode="DENY" Tier="Tier0" />
+			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="No" />
+		</GPO>
 		<!-- 
 			SUPPPORT THE COMUNITY: USE QWANT! 
 		-->
@@ -933,7 +980,7 @@
 		<Id Number="010" Name="Restrict computer junction to the domain">
 			<CallingFunction>Set-msDSMachineAccountQuota</CallingFunction>
 			<UseParameters>0</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
+			<TaskEnabled>Yes</TaskEnabled>
 			<TaskDescription>set `(msDSMachineAccountQuota` to `(0` to restrict domain junction</TaskDescription>
 		</Id>
 		<!-- 
@@ -943,7 +990,7 @@
 			<CallingFunction>Set-ADRecycleBin</CallingFunction>
 			<UseParameters>
 			</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
+			<TaskEnabled>Yes</TaskEnabled>
 			<TaskDescription>activate the `(AD Recycle Bin` optional feature</TaskDescription>
 		</Id>
 		<!-- 
@@ -953,7 +1000,7 @@
 			<CallingFunction>Set-SiteLinkNotify</CallingFunction>
 			<UseParameters>
 			</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
+			<TaskEnabled>Yes</TaskEnabled>
 			<TaskDescription>set `(notify` on every `(Site Links</TaskDescription>
 		</Id>
 		<!-- 
@@ -963,7 +1010,7 @@
 			<CallingFunction>Set-GpoCentralStore</CallingFunction>
 			<UseParameters>
 			</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
+			<TaskEnabled>Yes</TaskEnabled>
 			<TaskDescription>set `(GPO Central Store` and `(update adm and admx` files</TaskDescription>
 		</Id>
 		<!-- 
@@ -1086,7 +1133,7 @@
 			<CallingFunction>New-GpoObject</CallingFunction>
 			<UseParameters>
 			</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
+			<TaskEnabled>Yes</TaskEnabled>
 			<TaskDescription>Import or update `(group policy objects` to the domain and link them</TaskDescription>
 		</Id>
 		<!-- 
@@ -1104,7 +1151,7 @@
 		-->
 		<Id Number="135" Name="Setup LAPS permissions over the domain">
 			<CallingFunction>Set-WindowsLapsPermissions </CallingFunction>
-			<UseParameters>CUSTOM</UseParameters>
+			<UseParameters></UseParameters>
 			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>Set-up `(LAPS` permissions on the target domain</TaskDescription>
 		</Id>

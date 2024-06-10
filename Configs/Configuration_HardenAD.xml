@@ -90,6 +90,7 @@
 			<File>object.psm1</File>
 			<File>organizationalUnit.psm1</File>
 			<File>translation.psm1</File>
+			<File>windowslaps.psm1</File>  
 		</Directory>
 		<Directory NAME="Outputs">
 			<File>HardenAD.kdbx</File>

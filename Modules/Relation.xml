@@ -1,0 +1,46 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Relations de confiance">
+    <mxGraphModel dx="1536" dy="866" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Domaine A -->
+        <mxCell id="2" value="Domaine A" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;" vertex="1" parent="1">
+          <mxGeometry x="100" y="100" width="120" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Domaine B -->
+        <mxCell id="3" value="Domaine B" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;" vertex="1" parent="1">
+          <mxGeometry x="400" y="100" width="120" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Domaine C -->
+        <mxCell id="4" value="Domaine C" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFD1DC;strokeColor=#B94A48;" vertex="1" parent="1">
+          <mxGeometry x="250" y="300" width="120" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Relation bidirectionnelle entre A et B -->
+        <mxCell id="5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#82B366;" edge="1" parent="1" source="2" target="3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Relation unidirectionnelle de A vers B -->
+        <mxCell id="6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D79B00;dashed=1;endArrow=block;endFill=1;" edge="1" parent="1" source="3" target="2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Relation transitive entre A, B, et C -->
+        <mxCell id="7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#B94A48;dashed=1;endArrow=block;endFill=1;" edge="1" parent="1" source="4" target="3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#B94A48;dashed=1;endArrow=block;endFill=1;" edge="1" parent="1" source="3" target="4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#B94A48;dashed=1;endArrow=block;endFill=1;" edge="1" parent="1" source="2" target="4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
